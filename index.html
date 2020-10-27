@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .up {
+            height: 60px;
+            background-color: black;
+            width: 20px;
+            display: inline-block;
+            border-left-style: dashed;
+            border-left-width: 3px;
+            border-left-color: gray;
+        }
+
+        .down {
+            height: 60px;
+            border-color: black;
+            border-style: solid;
+            border-top-width: 0px;
+            border-left-style: dashed;
+            border-left-width: 3px;
+            border-left-color: gray;
+            border-right-width: 0px;
+            border-bottom-width: 2px;
+            width: 20px;
+            display: inline-block;
+        }
+
+        .red {
+            border-color: red;
+        }
+
+        .green {
+            border-color: greenyellow;
+            background-color: greenyellow;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div style="max-width:800px;margin:auto">
+        <input type="text" onkeyup="createRS232()" id="lines">
+        <div id="res">
+
+        </div>
+    </div>
+
+    <script>
+
+        function createRS232() {
+
+            let strval = document.getElementById('lines').value;
+            let chars = [];
+            for (let index = 0; index < strval.length; index++) {
+                const char = String(strval).charAt(index)
+                chars.push(char.charCodeAt(0).toString(2))
+            }
+            let finalHTML = "";
+            let finalTXT = "";
+            for (let index = 0; index < chars.length; index++) {
+                const element = chars[index];
+                finalHTML += "<div class='down green'></div>";
+                for (let index2 = 0; index2 < element.length; index2++) {
+                    finalHTML += "<div class='up'></div>";
+                    const char = String(element).charAt(index2)
+                    if (char == '1') {
+                        finalHTML += "<div class='up'></div>";
+                    } else {
+                        finalHTML += "<div class='down'></div>";
+                    }
+                    finalHTML += "<div class='down'></div>";
+                }
+                finalHTML += "<div class='down red'></div><br><div style='width:" + element.length * 20 + "px'>" + strval.charAt(index) + "</div><br>";
+            }
+            document.getElementById('res').innerHTML = finalHTML
+
+        }
+
+    </script>
+
+</body>
+
+</html>
